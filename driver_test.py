@@ -3,7 +3,7 @@ from time import sleep
 
 # LEFT SIDE A
 left_dir1a = 6
-left_dir2a = 7
+left_dir2a = 25
 left_pwm_pina = 18
 
 left_motora = Motor(forward=left_dir1a, backward=left_dir2a, pwm=False)
@@ -44,35 +44,62 @@ def forward(speed=0.8):
     left_pwmb.value = speed
     # right_pwmb.value = speed
 
-# def backward(speed=0.8):
-#     left_motora.backward()
-#     right_motor.backward()
-#     left_pwma.value = speed
-#     right_pwm.value = speed
+def backward(speed=0.8):
+    left_motora.backward()
+    left_motorb.backward()
+    left_pwma.value = speed
+    left_pwmb.value = speed
 
-# def turn_left(speed=0.8):
-#     left_motora.backward()
-#     right_motor.forward()
-#     left_pwma.value = speed
-#     right_pwm.value = speed
+def turn_left(speed=0.8):
+    left_motora.backward()
+    left_motorb.forward()
+    left_pwma.value = speed
+    left_pwmb.value = speed
 
-# def turn_right(speed=0.8):
-#     left_motora.forward()
-#     right_motor.backward()
-#     left_pwma.value = speed
-#     right_pwm.value = speed
+def turn_right(speed=0.8):
+    left_motora.forward()
+    left_motorb.backward()
+    left_pwma.value = speed
+    left_pwmb.value = speed
 
 # def stop():
 #     left_motora.stop()
 #     right_motor.stop()
 #     left_pwma.value = 0
 #     right_pwm.value = 0
-
+def dance():
+    turn_right(.2)
+    turn_left(.3)
+    sleep(.25)
+    turn_right(.4)
+    backward(.2)
+    forward(.2)
+    turn_left(.5)
+    backward(.2)
+    forward(.2)
+    forward(.15)
+    backward(.15)
+    forward(.15)
+    backward(.15)
+        
+def shake():
+    turn_left(.15)
+    turn_right(.15)
+    turn_left(.15)
+    turn_right(.15)
 # -------------------
 # TEST SEQUENCE
 # -------------------
 print("Forward...")
 forward(0.7)
+sleep(2)
+
+print("dance")
+dance()
+sleep(2)
+
+print("shake")
+shake()
 sleep(2)
 
 # print("Stop...")
