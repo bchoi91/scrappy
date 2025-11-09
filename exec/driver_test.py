@@ -17,20 +17,28 @@ left_pwm_pinb = 19
 left_motorb = Motor(forward=left_dir1b, backward=left_dir2b, pwm=False)
 left_pwmb = PWMOutputDevice(left_pwm_pinb, frequency=2000)  # quiet motor PWM
 
-# # RIGHT SIDE (two motors together on right driver)
-# right_dir1a = 7
-# right_dir2a = 1
-# right_pwm_pina = 12
-# right_motora = Motor(forward=right_dir1a, backward=right_dir2a, pwm=False)
-# right_pwma = PWMOutputDevice(right_pwm_pina, frequency=2000)
+def new_speed_change(z=1, l_thres=0, h_thres=10):
+    base_speed = 0.3
+    new_speed = 0
+    if z > h_thres:
+        new_speed = base_speed**h_thres
+    elif z < l_thres:
+        new_speed = base_speed**l_thres
+    else:
+        new_speed = base_speed**z
+    forward(new_speed)
 
-# # RIGHT SIDE (two motors together on right driver)
-# right_dir1b = 14
-# right_dir2b = 15
-# right_pwm_pinb = 18
-
-# right_motorb = Motor(forward=right_dir1b, backward=right_dir2b, pwm=False)
-# right_pwmb = PWMOutputDevice(right_pwm_pinb, frequency=2000)
+def directional_adjustment(x):
+    adj_val = x/4
+    adj_speed = 0.2
+    while x != 0:
+        if x < 0:
+            turn_right()
+            x = x - adj_val
+        if x > 0: 
+            turn_left()
+            x = x-adj_val
+    
 
 def forward(speed=0.8):
     left_motora.forward()
